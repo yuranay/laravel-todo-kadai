@@ -32,6 +32,9 @@
          <!-- ToDoの追加用モーダル -->
          @include('modals.add_todo')
 
+         <!-- ToDoの追加用モーダル -->
+         @include('modals.add_todo')
+
          <div class="col">
              <div class="card bg-light">
                  <div class="card-body d-flex justify-content-between align-items-center">
@@ -58,10 +61,30 @@
                  <div class="card mx-2 mb-2">
                      <div class="card-body">
                          <div class="d-flex justify-content-between align-items-center mb-2">
-                             <h5 class="card-title ms-1 mb-0">{{ $todo->content }}</h5>
+                             <h5 class="card-title ms-1 mb-0">
+                                 @if ($todo->done)
+                                 <s>{{ $todo->content }}</s>
+                                 @else
+                                 {{ $todo->content }}
+                                 @endif
+                             </h5>
                              <div class="dropdown">
                                  <a href="#" class="dropdown-toggle px-1 fs-5 fw-bold link-dark text-decoration-none menu-icon" id="dropdownTodoMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">︙</a>
                                  <ul class="dropdown-menu dropdown-menu-end text-center" aria-labelledby="dropdownTodoMenuLink">
+                                     <li>
+                                         <form action="{{ route('goals.todos.update', [$goal, $todo]) }}" method="post">
+                                             @csrf
+                                             @method('patch')
+                                             <input type="hidden" name="content" value="{{ $todo->content }}">
+                                             @if ($todo->done)
+                                             <input type="hidden" name="done" value="false">
+                                             <button type="submit" class="dropdown-item btn btn-link">未完了</button>
+                                             @else
+                                             <input type="hidden" name="done" value="true">
+                                             <button type="submit" class="dropdown-item btn btn-link">完了</button>
+                                             @endif
+                                         </form>
+                                     </li>
                                      <li><a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#editTodoModal{{ $todo->id }}">編集</a></li>
                                      <div class="dropdown-divider"></div>
                                      <li><a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteTodoModal{{ $todo->id }}">削除</a></li>
