@@ -2,25 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Goal;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class GoalController extends Controller
+class TagController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        $goals = Auth::user()->goals;
-        $tags = Auth::user()->tags;
-
-        return view('goals.index', compact('goals', 'tags'));
-    }
-
 
     /**
      * Store a newly created resource in storage.
@@ -31,13 +18,13 @@ class GoalController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required',
+            'name' => 'required',
         ]);
 
-        $goal = new Goal();
-        $goal->title = $request->input('title');
-        $goal->user_id = Auth::id();
-        $goal->save();
+        $tag = new Tag();
+        $tag->name = $request->input('name');
+        $tag->user_id = Auth::id();
+        $tag->save();
 
         return redirect()->route('goals.index');
     }
@@ -46,18 +33,18 @@ class GoalController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Goal  $goal
+     * @param  \App\Models\Tag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Goal $goal)
+    public function update(Request $request, Tag $tag)
     {
         $request->validate([
-            'title' => 'required',
+            'name' => 'required',
         ]);
 
-        $goal->title = $request->input('title');
-        $goal->user_id = Auth::id();
-        $goal->save();
+        $tag->name = $request->input('name');
+        $tag->user_id = Auth::id();
+        $tag->save();
 
         return redirect()->route('goals.index');
     }
@@ -65,12 +52,12 @@ class GoalController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Goal  $goal
+     * @param  \App\Models\Tag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Goal $goal)
+    public function destroy(Tag $tag)
     {
-        $goal->delete();
+        $tag->delete();
 
         return redirect()->route('goals.index');
     }
