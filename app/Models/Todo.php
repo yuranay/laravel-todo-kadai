@@ -18,4 +18,9 @@ class Todo extends Model
     {
         return $this->belongsTo(Goal::class);
     }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class)->withTimestamps();
+    }
 }

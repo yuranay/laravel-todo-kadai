@@ -52,6 +52,10 @@ class TodoController extends Controller
         $todo->done = $request->boolean('done', $todo->done);
         $todo->save();
 
+        if (!$request->has('done')) {
+            $todo->tags()->sync($request->input('tag_ids'));
+        };
+
         return redirect()->route('goals.index');
     }
 

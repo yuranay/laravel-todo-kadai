@@ -13,4 +13,9 @@ class Tag extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function todos()
+    {
+        return $this->belongsToMany(Todo::class)->withTimestamps();
+    }
 }
