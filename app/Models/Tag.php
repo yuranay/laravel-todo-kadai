@@ -18,4 +18,8 @@ class Tag extends Model
     {
         return $this->belongsToMany(Todo::class)->withTimestamps();
     }
+    public function description()
+    {
+        return $this->hasMany(Description::class);
+    }
 }

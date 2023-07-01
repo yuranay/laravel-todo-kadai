@@ -54,4 +54,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Tag::class);
     }
+
+    public function description()
+    {
+        return $this->hasMany(Description::class);
+    }
 }

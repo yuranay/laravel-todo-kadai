@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GoalController;
 use App\Http\Controllers\TodoController;
 use App\Http\Controllers\TagController;
+use App\Http\Contorollers\DescriptionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,3 +28,5 @@ Route::resource('goals', GoalController::class)->only(['index', 'store', 'update
 Route::resource('goals.todos', TodoController::class)->only(['store', 'update', 'destroy'])->middleware('auth');
 
 Route::resource('tags', TagController::class)->only(['store', 'update', 'destroy'])->middleware('auth');
+
+Route::resource('goals.todos', DescriptionController::class)->only(['store', 'update', 'destroy'])->middleware('auth');

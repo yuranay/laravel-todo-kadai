@@ -23,4 +23,8 @@ class Todo extends Model
     {
         return $this->belongsToMany(Tag::class)->withTimestamps();
     }
+    public function description()
+    {
+        return $this->hasMany(Description::class);
+    }
 }
