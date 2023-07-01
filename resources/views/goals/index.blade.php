@@ -44,8 +44,8 @@
          <!-- 目標の編集用モーダル -->
          @include('modals.edit_goal')
 
-         <!-- ToDoの追加用モーダル -->
-         @include('modals.add_todo')
+         <!-- 目標の削除用モーダル -->
+         @include('modals.delete_goal')
 
          <!-- ToDoの追加用モーダル -->
          @include('modals.add_todo')
@@ -74,15 +74,18 @@
                  @include('modals.delete_todo')
 
                  <div class="card mx-2 mb-2">
-                     <div class="card-body">
-                         <div class="d-flex justify-content-between align-items-center mb-2">
+                     <div class="card-body {{ $todo->done ? 'bg-secondary' : '' }}">
+                         <div class=" d-flex justify-content-between align-items-center mb-2">
                              <h5 class="card-title ms-1 mb-0">
-                                 @if ($todo->done)
-                                 <s>{{ $todo->content }}</s>
-                                 @else
                                  {{ $todo->content }}
-                                 @endif
                              </h5>
+                             <h6>
+                                 @if ($todo->done)
+                                 <span class="badge bg-secondary">完了</span>
+                                 @else
+                                 <span class="badge bg-secondary">未完了</span>
+                                 @endif
+                             </h6>
                              <div class="dropdown">
                                  <a href="#" class="dropdown-toggle px-1 fs-5 fw-bold link-dark text-decoration-none menu-icon" id="dropdownTodoMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">︙</a>
                                  <ul class="dropdown-menu dropdown-menu-end text-center" aria-labelledby="dropdownTodoMenuLink">
@@ -91,6 +94,7 @@
                                              @csrf
                                              @method('patch')
                                              <input type="hidden" name="content" value="{{ $todo->content }}">
+                                             <input type="hidden" name="description" value="{{ $todo->description }}">
                                              @if ($todo->done)
                                              <input type="hidden" name="done" value="false">
                                              <button type="submit" class="dropdown-item btn btn-link">未完了</button>
@@ -106,6 +110,7 @@
                                  </ul>
                              </div>
                          </div>
+                         <h6 class="card-subtitle ms-1 mb-2">{{ $todo->description }}</h6>
                          <h6 class="card-subtitle ms-1 mb-1 text-muted">{{ $todo->created_at }}</h6>
                          <div class="d-flex flex-wrap mx-1 mb-1">
                              @foreach ($todo->tags()->orderBy('id', 'asc')->get() as $tag)

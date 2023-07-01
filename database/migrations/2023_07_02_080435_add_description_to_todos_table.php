@@ -13,10 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('descriptions', function (Blueprint $table) {
-            $table->id();
-            $table->text('content');
-            $table->timestamps();
+        Schema::table('todos', function (Blueprint $table) {
+            $table->text("description")->after('content')->nullable();
         });
     }
 
@@ -27,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('descriptions');
+        Schema::table('todos', function (Blueprint $table) {
+            $table->dropColumn('description');
+        });
     }
 };
